@@ -78,6 +78,15 @@
 
     </ImageView>
 
+    <FrameLayout
+        android:id="@+id/main_LAY_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+      />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
@@ -97,8 +106,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            app:backgroundTint="@color/pink3"
             android:src="@drawable/ic_add"
+            app:backgroundTint="@color/pink3"
 
 
             />

@@ -6,6 +6,7 @@ public class Model {
     private String id;
     private String date;
 
+
     public Model() {
     }
     public Model(String task, String description, String id, String date) {
@@ -13,6 +14,7 @@ public class Model {
         this.description = description;
         this.id = id;
         this.date = date;
+
     }
 
     public String getTask() {
@@ -45,6 +47,8 @@ public class Model {
     public String getDate() {
         return date;
     }
+
+
 
     public Model setDate(String date) {
         this.date = date;

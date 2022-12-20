@@ -12,7 +12,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,14 +23,20 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,12 +54,18 @@ private RecyclerView recyclerView;
 private FloatingActionButton floatingActionButton;
 private String id;
 private FirebaseAuth mAuth;
-
+private FrameLayout main_LAY_banner;
+private final int COUNTER_MAX = 3;
 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://todolist-e5a6e-default-rtdb.firebaseio.com");
 private String key="";
+private FirebaseAnalytics mFirebaseAnalytics;
+public static final String TAG = "PTTT_Activity_VideoNew";
 private String task;
 private String description;
+private int counter=0;
 private ProgressDialog loader;
+VideoAd coinVideo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +82,27 @@ private ProgressDialog loader;
         });
 
     }
+    VideoAd.CallBack callBack = new VideoAd.CallBack() {
+        @Override
+        public void unitLoaded() {
 
+        }
+
+        @Override
+        public void earned() {
+
+        }
+
+        @Override
+        public void canceled() {
+
+        }
+
+        @Override
+        public void failed() {
+
+        }
+    };
     private void addNote() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -118,9 +152,27 @@ private ProgressDialog loader;
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                             Model m = new Model(mTask,mDiscription,id,date);
+                            String  c="1";
+                          //  counter =  databaseReference.child("task").child(id).child(c);
                             databaseReference.child("task").child(id).child(mTask).setValue(m);
+                            if(counter==COUNTER_MAX){
+                                coinVideo.show();
 
 
+                                //todovideo
+
+
+                                Log.d("TAG", "yes: "+counter);
+
+
+                                counter=0;
+
+                            }
+                            else{
+                                counter++;
+                                Log.d("TAG", "onDataChange: "+counter);
+
+                            }
                                 Toast.makeText(HomeActivity.this,"Task has been inserted successfully",Toast.LENGTH_SHORT).show();
                                 loader.dismiss();
 
@@ -151,9 +203,12 @@ private ProgressDialog loader;
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Todo List");
-
         mAuth = FirebaseAuth.getInstance();
 
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics.setUserId("test0");
+        mFirebaseAnalytics.setUserProperty("favorite_food", "fries.");
 
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -161,12 +216,40 @@ private ProgressDialog loader;
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         loader = new ProgressDialog(this);
-
-
+        main_LAY_banner = findViewById(R.id.main_LAY_banner);
         floatingActionButton = findViewById(R.id.fab);
+        showBanner();
+        initAds();
+    }
 
+    private void showBanner() {
+        String UNIT_ID = "ca-app-pub-3940256099942544/6300978111";
+        if (BuildConfig.DEBUG) {
+            UNIT_ID = "ca-app-pub-3940256099942544/6300978111";
+        }
+
+        AdView adView = new AdView(this);
+        adView.setAdUnitId(UNIT_ID);
+        main_LAY_banner.addView(adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        AdSize adSize = getAdSize();
+        adView.setAdSize(adSize);
+        adView.loadAd(adRequest);
+    }
+    private AdSize getAdSize() {
+        // Step 2 - Determine the screen width (less decorations) to use for the ad width.
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+        float widthPixels = outMetrics.widthPixels;
+        float density = outMetrics.density;
+
+        int adWidth = (int) (widthPixels / density);
+
+        // Step 3 - Get adaptive ad size and return for setting on the ad view.
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
     }
 
 
@@ -225,6 +308,12 @@ private ProgressDialog loader;
         adapter.startListening();
 
     }
+    private void initAds() {
+       // action_a.setEnabled(false);
+        String UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
+        coinVideo = new VideoAd(this, UNIT_ID, callBack);
+    }
+
 
 
 
@@ -281,6 +370,7 @@ private void updateTask (){
                 task= mtask.getText().toString().trim();
                 description = mDesc.getText().toString().trim();
                 String data = DateFormat.getDateInstance().format(new Date());
+
                 Model m = new Model(task,description,id,data);
                 databaseReference.child("task").child(id).child(task).setValue(m).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
