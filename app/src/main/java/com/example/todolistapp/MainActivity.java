@@ -41,4 +41,7 @@ private static final int SPLASH =3300;
         },SPLASH);
 
     }
+    //חד פעמי
+    //רב פעמי
+    ///מנוי
 }

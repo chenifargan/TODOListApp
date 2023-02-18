@@ -44,14 +44,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.DateFormat;
 import java.util.Date;
-
 public class HomeActivity extends AppCompatActivity {
 private Toolbar toolbar;
 private RecyclerView recyclerView;
-private FloatingActionButton floatingActionButton;
+private FloatingActionButton floatingActionButton, floatingActionButtonShop;
 private String id;
 private FirebaseAuth mAuth;
 private FrameLayout main_LAY_banner;
@@ -62,17 +60,39 @@ private FirebaseAnalytics mFirebaseAnalytics;
 public static final String TAG = "PTTT_Activity_VideoNew";
 private String task;
 private String description;
+private Helper helper;
 private int counter=0;
 private ProgressDialog loader;
-VideoAd coinVideo;
+private VideoAd coinVideo;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
         initViews();
+        //privacyPolicy
+
+        // if(){
+
+       helper.openHtmlTextDialog(HomeActivity.this,"privacyPolicy.html");
+    //}
+/*else{
+       helper.openHtmlTextDialog(HomeActivity.this,"termsConditions.html");
+
+        }
+
+
+
+ */
+        floatingActionButtonShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,ShopActivity.class);
+                startActivity(intent);
+            }
+        });
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,8 +100,9 @@ VideoAd coinVideo;
                 addNote();
             }
         });
-
     }
+
+
     VideoAd.CallBack callBack = new VideoAd.CallBack() {
         @Override
         public void unitLoaded() {
@@ -108,27 +129,18 @@ VideoAd coinVideo;
         LayoutInflater inflater = LayoutInflater.from(this);
         View myView = inflater.inflate(R.layout.input_file,null);
         myDialog.setView(myView);
-
         final AlertDialog dialog = myDialog.create();
         dialog.setCancelable(false);
-
         final EditText task = myView.findViewById(R.id.et_noteInputFile);
         final EditText description = myView.findViewById(R.id.et_Description);
         Button save = myView.findViewById(R.id.saveBtn);
         Button cancel = myView.findViewById(R.id.cancelBtn);
-
-
-        //TODO CANCEL BUTTON
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-
-
-
-
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,9 +209,8 @@ VideoAd coinVideo;
 
 
     }
-
     private void initViews() {
-
+        helper = Helper.initHelper();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Todo List");
@@ -219,10 +230,10 @@ VideoAd coinVideo;
         loader = new ProgressDialog(this);
         main_LAY_banner = findViewById(R.id.main_LAY_banner);
         floatingActionButton = findViewById(R.id.fab);
+        floatingActionButtonShop = findViewById(R.id.fab_shop);
         showBanner();
         initAds();
     }
-
     private void showBanner() {
         String UNIT_ID = "ca-app-pub-3940256099942544/6300978111";
         if (BuildConfig.DEBUG) {
@@ -251,21 +262,12 @@ VideoAd coinVideo;
         // Step 3 - Get adaptive ad size and return for setting on the ad view.
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
     }
-
-
     @Override
     protected void onStart() {
         super.onStart();
-        //:TODO BUNDEL GIVE THE PHONE NUMBER THE NEXT ACTIVITIS
 
         Bundle bundle = getIntent().getExtras();
         id = bundle.getString("id","PhoneTxet");
-
-
-
-      //  String id = "0505252055";
-
-
         FirebaseRecyclerOptions<Model> options = new FirebaseRecyclerOptions.Builder<Model>()
                 .setQuery(databaseReference.child("task").child(id), Model.class)
                 .build();
@@ -313,15 +315,6 @@ VideoAd coinVideo;
         String UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
         coinVideo = new VideoAd(this, UNIT_ID, callBack);
     }
-
-
-
-
-
-
-
-
-
     public static class myViewHolder extends RecyclerView.ViewHolder {
         View mView;
 
@@ -347,8 +340,7 @@ VideoAd coinVideo;
         }
 
     }
-
-private void updateTask (){
+    private void updateTask (){
 
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -420,14 +412,11 @@ private void updateTask (){
 
 
 }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
        switch (item.getItemId()){

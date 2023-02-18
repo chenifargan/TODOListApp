@@ -1,17 +1,24 @@
 package com.example.todolistapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class loginActivity extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://todolist-e5a6e-default-rtdb.firebaseio.com");
     EditText phoneNumber, password;
@@ -27,9 +37,6 @@ public class loginActivity extends AppCompatActivity {
     ImageButton btnOK;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,11 +117,11 @@ btnOK.setOnClickListener(new View.OnClickListener() {
 });
 
     }
-
     private void initViews() {
         phoneNumber = findViewById(R.id.et_PhoneNumber);
         password = findViewById(R.id.et_Code);
         btnToRegister = findViewById(R.id.btn_go_to_register);
         btnOK = findViewById(R.id.btn_next);
     }
+
 }

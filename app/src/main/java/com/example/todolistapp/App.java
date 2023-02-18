@@ -10,5 +10,6 @@ public class App extends Application {
         super.onCreate();
 
         MobileAds.initialize(this);
+        Helper.initHelper();
     }
 }

@@ -111,6 +111,17 @@
 
 
             />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="16dp"
+            android:src="@drawable/shop"
+            app:backgroundTint="@color/pink3"
+
+
+            />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

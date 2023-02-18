@@ -24,14 +24,11 @@ public class VideoAd {
     }
 
     public static final String TAG = "PTTT_VideoAd";
-
     private Activity activity;
     private String adUnitId;
     private CallBack callBack;
-
     private RewardedAd mRewardedAd;
     private boolean isRewarded = false;
-
     public VideoAd(Activity activity, String adUnitId, CallBack callBack) {
         this.activity = activity;
         this.adUnitId = adUnitId;
@@ -39,12 +36,9 @@ public class VideoAd {
 
         load(false);
     }
-
     public boolean isLoaded() {
         return mRewardedAd != null;
     }
-
-
     private void load(boolean showAfterLoading) {
         AdRequest adRequest = new AdRequest.Builder().build();
         //RequestConfiguration configuration = new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("E3D543B2BDC7AEA65DE5DE9E2538ED50")).build();
@@ -69,7 +63,6 @@ public class VideoAd {
                     }
                 });
     }
-
     public void show() {
         if (mRewardedAd != null) {
             Log.d(TAG, "mRewardedAd != null");

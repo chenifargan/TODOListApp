@@ -29,8 +29,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initViews();
-
-
         btnNextActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,10 +100,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
         btnTologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
