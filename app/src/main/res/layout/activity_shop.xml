@@ -92,13 +92,13 @@
             <TextView
                 android:layout_width="90dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="36dp"
+                android:layout_marginEnd="40dp"
+                android:gravity="center"
                 android:text="One time color change"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_choose_color"
-
 
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.516" />
@@ -114,7 +114,7 @@
                 android:src="@drawable/eyedropper"
                 app:layout_constraintBottom_toBottomOf="@id/ConstraintLayout1"
                 app:layout_constraintEnd_toEndOf="@id/ConstraintLayout1"
-                app:layout_constraintHorizontal_bias="0.642"
+                app:layout_constraintHorizontal_bias="0.678"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/ConstraintLayout1"
                 app:layout_constraintVertical_bias="1.0" />
@@ -147,14 +147,14 @@
             <TextView
                 android:layout_width="90dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="36dp"
+                android:layout_marginEnd="8dp"
                 android:text="Unlimited color change"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_choose_color2"
 
-
+                android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.516" />
 
@@ -168,9 +168,10 @@
                 android:src="@drawable/eyedropper"
                 app:layout_constraintBottom_toBottomOf="@id/ConstraintLayout2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.628"
+                app:layout_constraintHorizontal_bias="0.6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/ConstraintLayout2" />
+                app:layout_constraintTop_toTopOf="@id/ConstraintLayout2"
+                app:layout_constraintVertical_bias="0.531" />
 
             <TextView
                 android:layout_width="100dp"
@@ -178,6 +179,7 @@
                 android:text="Deleting advertisements"
                 android:textColor="#F80000"
                 android:textStyle="bold"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/ConstraintLayout2"
                 app:layout_constraintHorizontal_bias="0.767"
@@ -211,16 +213,16 @@
             <TextView
                 android:layout_width="104dp"
                 android:layout_height="69dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginEnd="8dp"
                 android:text="Unlimited color change and receiving notifications"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_choose_color3"
-
+                android:gravity="center"
 
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.483" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageButton
                 android:id="@+id/btn_choose_color3"
@@ -232,7 +234,7 @@
                 android:src="@drawable/eyedropper"
                 app:layout_constraintBottom_toBottomOf="@id/ConstraintLayout3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.633"
+                app:layout_constraintHorizontal_bias="0.625"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/ConstraintLayout3" />
 
@@ -242,6 +244,7 @@
                 android:text="Deleting advertisements"
                 android:textColor="#F80000"
                 android:textStyle="bold"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/ConstraintLayout3"
                 app:layout_constraintHorizontal_bias="0.767"

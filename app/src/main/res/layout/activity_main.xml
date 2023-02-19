@@ -11,7 +11,7 @@
 
 
     <ImageView
-        android:id="@+id/iv_circle"
+        android:id="@+id/iv_image1"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/circle"

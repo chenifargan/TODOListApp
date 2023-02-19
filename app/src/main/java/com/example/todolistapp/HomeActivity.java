@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -24,6 +25,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
@@ -64,6 +67,12 @@ private Helper helper;
 private int counter=0;
 private ProgressDialog loader;
 private VideoAd coinVideo;
+private int color=0;
+private int choose;
+private ImageView[] images;
+private ImageView loguothome;
+private MaterialButton btn_privacyPolicy, btn_termsConditions;
+
 
 
     @Override
@@ -71,26 +80,35 @@ private VideoAd coinVideo;
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
+        Intent intent = getIntent();
+         color = intent.getIntExtra("color", 0);
+         choose = intent.getIntExtra("choose", 0);
+        Log.d(TAG, "onCreate: "+color);
+
         initViews();
-        //privacyPolicy
-
-        // if(){
-
-       helper.openHtmlTextDialog(HomeActivity.this,"privacyPolicy.html");
-    //}
-/*else{
-       helper.openHtmlTextDialog(HomeActivity.this,"termsConditions.html");
-
-        }
 
 
+        btn_privacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helper.openHtmlTextDialog(HomeActivity.this,"privacyPolicy.html");
 
- */
+            }
+        });
+        btn_termsConditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helper.openHtmlTextDialog(HomeActivity.this,"termsConditions.html");
+
+            }
+        });
+
         floatingActionButtonShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this,ShopActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -135,6 +153,7 @@ private VideoAd coinVideo;
         final EditText description = myView.findViewById(R.id.et_Description);
         Button save = myView.findViewById(R.id.saveBtn);
         Button cancel = myView.findViewById(R.id.cancelBtn);
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,6 +235,7 @@ private VideoAd coinVideo;
         getSupportActionBar().setTitle("Todo List");
         mAuth = FirebaseAuth.getInstance();
 
+        images= new ImageView[] {findViewById(R.id.iv_image1),findViewById(R.id.iv_image2),findViewById(R.id.iv_image3),findViewById(R.id.iv_image4)};
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mFirebaseAnalytics.setUserId("test0");
@@ -230,7 +250,19 @@ private VideoAd coinVideo;
         loader = new ProgressDialog(this);
         main_LAY_banner = findViewById(R.id.main_LAY_banner);
         floatingActionButton = findViewById(R.id.fab);
+        loguothome = findViewById(R.id.logouthome);
         floatingActionButtonShop = findViewById(R.id.fab_shop);
+        if(color!=0){
+            for (int i=0;i<images.length;i++){
+                images[i].setColorFilter(color);
+
+            }
+            floatingActionButtonShop.setBackgroundTintList(ColorStateList.valueOf(color));
+            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(color));
+            loguothome.setColorFilter(color);
+        }
+        btn_privacyPolicy= findViewById(R.id.btn_privacyPolicy);
+        btn_termsConditions = findViewById(R.id.btn_termsConditions);
         showBanner();
         initAds();
     }

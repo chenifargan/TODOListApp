@@ -21,10 +21,11 @@ import top.defaults.colorpicker.ColorPickerPopup;
 
 public class ShopActivity extends AppCompatActivity {
     private int mDefaultColor=0;
-    private ImageButton btn_choose_color;
+    private ImageButton btn_choose_color1,btn_choose_color2,btn_choose_color3;
     private ConstraintLayout[] constraintLayout;
     private ImageView [] images;
     private MaterialButton btn_back;
+    private int c=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +34,26 @@ public class ShopActivity extends AppCompatActivity {
         initViews();
 
 
-        btn_choose_color.setOnClickListener(new View.OnClickListener() {
+        btn_choose_color1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                c=1;
+                addColor();
+
+            }
+        });
+        btn_choose_color2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                c=2;
+                addColor();
+
+            }
+        });
+        btn_choose_color3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                c=3;
                 addColor();
 
             }
@@ -44,6 +62,8 @@ public class ShopActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShopActivity.this,HomeActivity.class);
+                intent.putExtra("color", mDefaultColor);
+                intent.putExtra("choose",c);
                 startActivity(intent);
                 finish();
             }
@@ -52,8 +72,11 @@ public class ShopActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        btn_choose_color= findViewById(R.id.btn_choose_color);
-    constraintLayout = new ConstraintLayout[]{findViewById(R.id.ConstraintLayout1),findViewById(R.id.ConstraintLayout2),findViewById(R.id.ConstraintLayout3)};
+        btn_choose_color1= findViewById(R.id.btn_choose_color);
+        btn_choose_color2= findViewById(R.id.btn_choose_color2);
+        btn_choose_color3= findViewById(R.id.btn_choose_color3);
+
+        constraintLayout = new ConstraintLayout[]{findViewById(R.id.ConstraintLayout1),findViewById(R.id.ConstraintLayout2),findViewById(R.id.ConstraintLayout3)};
     images= new ImageView[] {findViewById(R.id.iv_shop1),findViewById(R.id.iv_shop2),findViewById(R.id.iv_shop3),findViewById(R.id.iv_shop4)};
     btn_back = findViewById(R.id.btn_back);
 
@@ -140,7 +163,10 @@ public class ShopActivity extends AppCompatActivity {
                         // now change the value of the GFG text
                         // as well.
 
-                        btn_choose_color.setBackgroundColor(mDefaultColor);
+                        btn_choose_color1.setBackgroundColor(mDefaultColor);
+                        btn_choose_color2.setBackgroundColor(mDefaultColor);
+                        btn_choose_color3.setBackgroundColor(mDefaultColor);
+                        btn_back.setBackgroundColor(mDefaultColor);
                         back.setBackgroundColor(mDefaultColor);
                         mPickColorButton.setBackgroundColor(mDefaultColor);
                         mSetColorButton.setBackgroundColor(mDefaultColor);
